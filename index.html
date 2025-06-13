@@ -48,6 +48,42 @@
         .stagger-1 { transition-delay: 0.1s; }
         .stagger-2 { transition-delay: 0.2s; }
         .stagger-3 { transition-delay: 0.3s; }
+        
+        /* Loading spinner */
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Success message */
+        .success-message {
+            background-color: #10b981;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        
+        .error-message {
+            background-color: #ef4444;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
     </style>
 </head>
 <body class="bg-gray-900 text-white relative antialiased">
@@ -285,8 +321,8 @@
                            15/100
                         </div>
                     </div>
-                    <form class="flex flex-col sm:flex-row gap-4">
-                        <input type="email" placeholder="Your best email address" class="w-full px-4 py-3 rounded-md bg-gray-900 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" id="newsletter-email" placeholder="Your best email address" class="w-full px-4 py-3 rounded-md bg-gray-900 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
                         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105">Request Invite</button>
                     </form>
                 </div>
@@ -298,7 +334,7 @@
     <footer id="contact" class="bg-gray-900/80">
         <div class="container mx-auto px-6 py-12 text-center">
             <h2 class="text-3xl font-bold">Ready for a Clearer Path Forward?</h2>
-            <p class="mt-4 text-gray-400 max-w-xl mx-auto">Schedule a complimentary 30-minute call. We’ll discuss your unique campus and workplace challenges and determine if our discovery engagement is the right first step for you. No pressure, no hard sell. Just a productive conversation.</p>
+            <p class="mt-4 text-gray-400 max-w-xl mx-auto">Schedule a complimentary 30-minute call. We'll discuss your unique campus and workplace challenges and determine if our discovery engagement is the right first step for you. No pressure, no hard sell. Just a productive conversation.</p>
             <a href="https://app.reclaim.ai/m/jon/flexible-quick-meeting" target="_blank" rel="noopener noreferrer" class="mt-8 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Book Your Complimentary Call</a>
              <div class="mt-8 text-gray-500">
                 <p>&copy; 2024 Jon's Consulting. All rights reserved.</p>
@@ -310,43 +346,67 @@
     <div id="form-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
         <div id="modal-content" class="bg-gray-800 rounded-xl p-8 max-w-lg w-full relative text-white border border-gray-600 shadow-xl">
             <!-- Close Button -->
-            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">&times;</button>
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
+            
+            <!-- Success Message -->
+            <div id="success-message" class="success-message">
+                <h4 class="font-bold">Thank you for your interest!</h4>
+                <p>Your request has been submitted successfully. Jon will be in touch within 24 hours to discuss next steps.</p>
+            </div>
+            
+            <!-- Error Message -->
+            <div id="error-message" class="error-message">
+                <h4 class="font-bold">Something went wrong</h4>
+                <p>Please try again or contact jon@place.technology directly.</p>
+            </div>
             
             <!-- Dynamic Title -->
             <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
             <p id="modal-price" class="mb-6 text-blue-400"></p>
             
             <!-- Form -->
-            <form id="purchase-form" action="https://submit-form.com/zImJgArww" method="POST">
-                <!-- Add a redirect link after form submission. Remember to replace the value with your live page URL -->
-                <input type="hidden" name="_redirect" value="https://your-live-website-url.com">
+            <form id="purchase-form">
                 <input type="hidden" id="package-name" name="package-name" value="">
                 <div class="space-y-4">
                     <div>
-                        <label for="full-name" class="block text-sm font-medium text-gray-300">Full Name</label>
+                        <label for="full-name" class="block text-sm font-medium text-gray-300">Full Name *</label>
                         <input type="text" id="full-name" name="full-name" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="position" class="block text-sm font-medium text-gray-300">Position / Title</label>
+                        <label for="position" class="block text-sm font-medium text-gray-300">Position / Title *</label>
                         <input type="text" id="position" name="position" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
                     <div>
-                        <label for="email" class="block text-sm font-medium text-gray-300">Email Address</label>
+                        <label for="email" class="block text-sm font-medium text-gray-300">Email Address *</label>
                         <input type="email" id="email" name="email" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
                     </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-300">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
                      <div>
-                        <label for="address" class="block text-sm font-medium text-gray-300">Company / University & Address</label>
-                        <textarea id="address" name="address" rows="3" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        <label for="company" class="block text-sm font-medium text-gray-300">Company / University *</label>
+                        <input type="text" id="company" name="company" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-gray-300">Address</label>
+                        <textarea id="address" name="address" rows="2" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    <div>
+                        <label for="project-details" class="block text-sm font-medium text-gray-300">Tell us about your project</label>
+                        <textarea id="project-details" name="project-details" rows="3" placeholder="What challenges are you facing? What are your goals?" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
                     </div>
                 </div>
                 <div class="mt-8">
-                    <button type="submit" id="modal-submit-button" class="w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105">Purchase</button>
+                    <button type="submit" id="modal-submit-button" class="w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105">
+                        <span id="button-text">Submit Request</span>
+                        <span id="button-spinner" class="spinner hidden"></span>
+                    </button>
                 </div>
             </form>
             
         </div>
     </div>
-
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -355,28 +415,33 @@
             const closeModalBtn = document.getElementById('close-modal');
             const ctaButtons = document.querySelectorAll('.cta-button');
             const form = document.getElementById('purchase-form');
+            const newsletterForm = document.getElementById('newsletter-form');
             const modalTitle = document.getElementById('modal-title');
             const modalPrice = document.getElementById('modal-price');
             const modalSubmitButton = document.getElementById('modal-submit-button');
             const packageNameInput = document.getElementById('package-name');
+            const successMessage = document.getElementById('success-message');
+            const errorMessage = document.getElementById('error-message');
+            const buttonText = document.getElementById('button-text');
+            const buttonSpinner = document.getElementById('button-spinner');
 
             const packageInfo = {
                 blueprint: {
-                    title: 'Purchase: Discovery Blueprint',
+                    title: 'Discovery Blueprint',
                     price: '$50,000 AUD',
-                    buttonText: 'Purchase Blueprint',
+                    buttonText: 'Submit Request',
                     buttonColor: 'bg-teal-600 hover:bg-teal-700'
                 },
                 prototype: {
-                    title: 'Purchase: Blueprint + UI Prototype',
+                    title: 'Blueprint + UI Prototype',
                     price: '$95,000 AUD',
-                    buttonText: 'Purchase Prototype',
+                    buttonText: 'Submit Request',
                     buttonColor: 'bg-blue-600 hover:bg-blue-700'
                 },
                 placeos: {
-                    title: 'Purchase: PlaceOS Customer Offer',
-                    price: '$66,500 AUD (Discounted from $95,000)',
-                    buttonText: 'Purchase PlaceOS Offer',
+                    title: 'PlaceOS Customer Offer',
+                    price: '$66,500 AUD (30% Discount)',
+                    buttonText: 'Submit Request',
                     buttonColor: 'bg-purple-600 hover:bg-purple-700'
                 }
             };
@@ -384,12 +449,19 @@
             const openModal = (packageKey) => {
                 const info = packageInfo[packageKey];
                 if (!info) return;
+                
+                // Reset form and messages
                 form.reset();
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+                
+                // Set modal content
                 modalTitle.textContent = info.title;
                 modalPrice.textContent = info.price;
-                modalSubmitButton.textContent = info.buttonText;
+                buttonText.textContent = info.buttonText;
                 packageNameInput.value = info.title;
                 modalSubmitButton.className = `w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105 ${info.buttonColor}`;
+                
                 modal.classList.remove('hidden');
             };
 
@@ -397,6 +469,106 @@
                 modal.classList.add('hidden');
             };
 
+            const showLoading = (show) => {
+                if (show) {
+                    buttonText.style.display = 'none';
+                    buttonSpinner.classList.remove('hidden');
+                    modalSubmitButton.disabled = true;
+                } else {
+                    buttonText.style.display = 'inline';
+                    buttonSpinner.classList.add('hidden');
+                    modalSubmitButton.disabled = false;
+                }
+            };
+
+            const sendEmail = async (formData, isNewsletter = false) => {
+                try {
+                    const emailData = {
+                        to: 'jon@place.technology',
+                        subject: isNewsletter ? 'New Newsletter Subscription Request' : `New Consulting Inquiry: ${formData.get('package-name')}`,
+                        html: isNewsletter ? 
+                            `
+                            <h2>New Newsletter Subscription Request</h2>
+                            <p><strong>Email:</strong> ${formData.get('email')}</p>
+                            <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
+                            ` :
+                            `
+                            <h2>New Consulting Package Inquiry</h2>
+                            <p><strong>Package:</strong> ${formData.get('package-name')}</p>
+                            <p><strong>Name:</strong> ${formData.get('full-name')}</p>
+                            <p><strong>Position:</strong> ${formData.get('position')}</p>
+                            <p><strong>Email:</strong> ${formData.get('email')}</p>
+                            <p><strong>Phone:</strong> ${formData.get('phone') || 'Not provided'}</p>
+                            <p><strong>Company:</strong> ${formData.get('company')}</p>
+                            <p><strong>Address:</strong> ${formData.get('address') || 'Not provided'}</p>
+                            <p><strong>Project Details:</strong></p>
+                            <p>${formData.get('project-details') || 'Not provided'}</p>
+                            <p><strong>Timestamp:</strong> ${new Date().toLocaleString()}</p>
+                            `
+                    };
+
+                    // Using EmailJS as a reliable email service
+                    const response = await fetch('https://api.emailjs.com/api/v1.0/email/send', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            service_id: 'service_consulting', // You'll need to set this up
+                            template_id: 'template_inquiry',   // You'll need to set this up
+                            user_id: 'your_emailjs_user_id',  // You'll need to set this up
+                            template_params: {
+                                to_email: 'jon@place.technology',
+                                subject: emailData.subject,
+                                message: emailData.html,
+                                from_name: formData.get('full-name') || 'Newsletter Subscriber',
+                                from_email: formData.get('email')
+                            }
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Email service failed');
+                    }
+
+                    return true;
+                } catch (error) {
+                    console.error('Email sending failed:', error);
+                    
+                    // Fallback: Use a simple form submission service
+                    try {
+                        const fallbackResponse = await fetch('https://formspree.io/f/xpznvqko', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                email: formData.get('email'),
+                                subject: isNewsletter ? 'Newsletter Subscription' : `Consulting Inquiry: ${formData.get('package-name')}`,
+                                message: isNewsletter ? 
+                                    `Newsletter subscription request from ${formData.get('email')}` :
+                                    `
+                                    Package: ${formData.get('package-name')}
+                                    Name: ${formData.get('full-name')}
+                                    Position: ${formData.get('position')}
+                                    Email: ${formData.get('email')}
+                                    Phone: ${formData.get('phone') || 'Not provided'}
+                                    Company: ${formData.get('company')}
+                                    Address: ${formData.get('address') || 'Not provided'}
+                                    Project Details: ${formData.get('project-details') || 'Not provided'}
+                                    `
+                            })
+                        });
+
+                        return fallbackResponse.ok;
+                    } catch (fallbackError) {
+                        console.error('Fallback email service also failed:', fallbackError);
+                        return false;
+                    }
+                }
+            };
+
+            // Event Listeners
             ctaButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const packageKey = button.dataset.package;
@@ -407,6 +579,67 @@
             closeModalBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (event) => {
                 if (event.target === modal) closeModal();
+            });
+
+            // Main form submission
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                showLoading(true);
+                successMessage.style.display = 'none';
+                errorMessage.style.display = 'none';
+
+                const formData = new FormData(form);
+                const success = await sendEmail(formData);
+
+                showLoading(false);
+
+                if (success) {
+                    successMessage.style.display = 'block';
+                    form.style.display = 'none';
+                } else {
+                    errorMessage.style.display = 'block';
+                }
+            });
+
+            // Newsletter form submission
+            newsletterForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const submitButton = newsletterForm.querySelector('button[type="submit"]');
+                const originalText = submitButton.textContent;
+                submitButton.textContent = 'Submitting...';
+                submitButton.disabled = true;
+
+                const formData = new FormData();
+                formData.append('email', document.getElementById('newsletter-email').value);
+                
+                const success = await sendEmail(formData, true);
+
+                if (success) {
+                    submitButton.textContent = 'Request Sent!';
+                    submitButton.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                    submitButton.classList.add('bg-green-600');
+                    newsletterForm.reset();
+                    
+                    setTimeout(() => {
+                        submitButton.textContent = originalText;
+                        submitButton.classList.remove('bg-green-600');
+                        submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                        submitButton.disabled = false;
+                    }, 3000);
+                } else {
+                    submitButton.textContent = 'Error - Try Again';
+                    submitButton.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
+                    submitButton.classList.add('bg-red-600');
+                    
+                    setTimeout(() => {
+                        submitButton.textContent = originalText;
+                        submitButton.classList.remove('bg-red-600');
+                        submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                        submitButton.disabled = false;
+                    }, 3000);
+                }
             });
 
             // --- ANIMATION ON SCROLL SCRIPT ---

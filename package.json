@@ -1,0 +1,17 @@
+{
+  "name": "jons-consulting",
+  "version": "1.0.0",
+  "description": "Jon's Consulting - Exclusive Service Landing Page",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "start": "npx serve . -p 3000",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": ["consulting", "landing-page", "static"],
+  "author": "Jon's Consulting",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
