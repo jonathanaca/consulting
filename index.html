@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jon's Consulting - Exclusive Service</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide-react@0.292.0/dist/lucide-react.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .swoosh-bg {
+            background-image: 
+                radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 0%), 
+                radial-gradient(at 97% 21%, hsla(125, 98%, 72%, 1) 0px, transparent 50%),
+                radial-gradient(at 52% 99%, hsla(355, 98%, 76%, 1) 0px, transparent 50%),
+                radial-gradient(at 10% 29%, hsla(256, 96%, 68%, 1) 0px, transparent 50%),
+                radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
+                radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
+                radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+            filter: blur(80px);
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            right: -100px;
+            bottom: -100px;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        /* Style for the modal */
+        #form-modal.hidden {
+            display: none;
+        }
+        /* Styles for scroll animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Staggered delays for card animations */
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+    </style>
+</head>
+<body class="bg-gray-900 text-white relative antialiased">
+    <div class="swoosh-bg"></div>
+
+    <!-- Header -->
+    <header class="container mx-auto px-6 py-6">
+        <div class="flex items-center justify-between">
+            <div class="text-2xl font-bold">Jon's Consulting</div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#problem" class="hover:text-blue-400 transition-colors">The Problem</a>
+                <a href="#solution" class="hover:text-blue-400 transition-colors">Our Process</a>
+                <a href="#outcomes" class="hover:text-blue-400 transition-colors">Deliverables</a>
+                <a href="#contact" class="hover:text-blue-400 transition-colors">Contact</a>
+            </nav>
+            <button class="md:hidden">
+                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+        <!-- Hero Section -->
+        <section class="text-center py-20">
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight">Clarity Before Code.</h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">De-risk your campus or workplace technology project with a fixed-price discovery engagement. We deliver the stakeholder alignment and actionable roadmap you need to succeed—with or without our platform.</p>
+            <div class="mt-8 flex justify-center gap-4">
+                <a href="https://app.reclaim.ai/m/jon/flexible-quick-meeting" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Book a Discovery Call</a>
+                <a href="#outcomes" class="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">See The Deliverables</a>
+            </div>
+        </section>
+
+        <!-- Video Section -->
+        <section class="max-w-4xl mx-auto animate-on-scroll">
+             <div class="bg-gray-800/50 aspect-video rounded-xl flex items-center justify-center border-2 border-dashed border-gray-700">
+                <div class="text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p class="mt-2 text-gray-400">Wistia Video Placeholder</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bio Section -->
+        <section id="about" class="py-20 animate-on-scroll">
+            <div class="max-w-4xl mx-auto bg-gray-800/50 rounded-xl p-8 border border-gray-700 flex flex-col sm:flex-row sm:items-center gap-8">
+                <img src="profile.jpg" 
+                     alt="Jonathan McFarlane" 
+                     class="w-32 h-32 md:w-48 md:h-48 rounded-full flex-shrink-0 object-cover border-4 border-gray-700 mx-auto sm:mx-0"
+                     onerror="this.onerror=null;this.src='https://placehold.co/192x192/1F2937/FFFFFF?text=JM';">
+                <div class="text-center sm:text-left">
+                    <h3 class="text-3xl font-bold">Jonathan McFarlane</h3>
+                    <p class="mt-4 text-gray-300">
+                        Jonathan McFarlane is the Co-Founder and CEO of PlaceOS, a platform that connects all systems across a campus—AV, IT, access control, HVAC, lighting, and more—to enable automation, real-time data, and seamless user experiences. Originally developed to break down silos in commercial buildings, PlaceOS now powers smart campuses and workplaces alike.
+                    </p>
+                     <p class="mt-4 text-gray-300">
+                       With over a decade of experience delivering large-scale technology projects, Jonathan combines deep technical knowledge with a background in user experience design. He holds a Master of Design Science from the University of Sydney and regularly contributes thought leadership on platform strategy and hybrid space design.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Limited Client Section -->
+        <section id="limited-access" class="py-16 bg-gray-800/50 rounded-xl backdrop-blur-sm animate-on-scroll">
+            <div class="text-center max-w-3xl mx-auto">
+                <h2 class="text-3xl font-bold mb-4">An Exclusive Partnership</h2>
+                <p class="text-gray-300 mb-8 px-4">To ensure dedicated, high-impact collaboration, we limit our discovery engagements to **12 clients per year**.</p>
+                <div class="px-4">
+                    <div class="w-full bg-gray-700 rounded-full h-6">
+                        <div class="bg-gradient-to-r from-teal-400 to-blue-500 h-6 rounded-full text-center text-sm font-bold flex items-center justify-center" style="width: 66.7%;">
+                           8 / 12 Slots Filled
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-400 mt-2">Current Availability for 2024</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Problem Section -->
+        <section id="problem" class="py-20">
+            <div class="text-center max-w-3xl mx-auto animate-on-scroll">
+                <h2 class="text-4xl font-bold">Big plans, bigger questions.</h2>
+                <p class="mt-4 text-lg text-gray-300">You know a smarter campus or workplace is the future. But the path to get there is filled with complexity, competing priorities, and risk.</p>
+            </div>
+            <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center p-6 bg-gray-800/40 rounded-lg animate-on-scroll">
+                    <span class="text-5xl">🏢</span>
+                    <h3 class="text-xl font-bold mt-4">Siloed Departments</h3>
+                    <p class="text-gray-400 mt-2">Facilities, IT, and HR have different goals. How do you unite them behind a single vision?</p>
+                </div>
+                <div class="text-center p-6 bg-gray-800/40 rounded-lg animate-on-scroll stagger-1">
+                    <span class="text-5xl">🔗</span>
+                    <h3 class="text-xl font-bold mt-4">Complex Technology</h3>
+                    <p class="text-gray-400 mt-2">You have systems that don't talk to each other. How do you integrate them without starting from scratch?</p>
+                </div>
+                <div class="text-center p-6 bg-gray-800/40 rounded-lg animate-on-scroll stagger-2">
+                     <span class="text-5xl">💰</span>
+                    <h3 class="text-xl font-bold mt-4">Uncertain ROI</h3>
+                    <p class="text-gray-400 mt-2">You can't afford a costly investment that doesn't deliver clear value. How do you prove the business case?</p>
+                </div>
+                <div class="text-center p-6 bg-gray-800/40 rounded-lg animate-on-scroll stagger-3">
+                    <span class="text-5xl">🤔</span>
+                    <h3 class="text-xl font-bold mt-4">Undefined Needs</h3>
+                    <p class="text-gray-400 mt-2">Your teams struggle to articulate what they need. How do you turn vague ideas into a concrete plan?</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Solution - The Process -->
+        <section id="solution" class="py-20">
+            <div class="text-center max-w-3xl mx-auto animate-on-scroll">
+                <h2 class="text-4xl font-bold">Your Blueprint for Success.</h2>
+                <p class="mt-4 text-lg text-gray-300">We've refined a structured, sprint-based process that moves you from ambiguity to an actionable plan. We facilitate the tough conversations and do the technical diligence so you can move forward with confidence.</p>
+            </div>
+            <div class="mt-16 max-w-4xl mx-auto">
+                <div class="space-y-12">
+                    <!-- Phase 1 -->
+                    <div class="relative flex items-start gap-4 animate-on-scroll">
+                        <div class="flex-shrink-0 text-3xl mt-1">1️⃣</div>
+                        <div class="flex-grow">
+                            <h3 class="text-2xl font-bold text-teal-400">Discovery & Stakeholder Alignment</h3>
+                            <p class="mt-2 text-gray-300">We run collaborative workshops with your key stakeholders across Facilities, IT, AV, HR, and Operations to unify objectives and define what success looks like for everyone.</p>
+                        </div>
+                    </div>
+                    <!-- Phase 2 -->
+                    <div class="relative flex items-start gap-4 animate-on-scroll stagger-1">
+                        <div class="flex-shrink-0 text-3xl mt-1">2️⃣</div>
+                        <div class="flex-grow">
+                            <h3 class="text-2xl font-bold text-teal-400">User-Centric Design</h3>
+                            <p class="mt-2 text-gray-300">We go beyond features to capture the real-world user stories and journeys of your employees and operators. This ensures the solution is adopted because it solves problems people actually have.</p>
+                        </div>
+                    </div>
+                    <!-- Phase 3 -->
+                    <div class="relative flex items-start gap-4 animate-on-scroll stagger-2">
+                        <div class="flex-shrink-0 text-3xl mt-1">3️⃣</div>
+                        <div class="flex-grow">
+                            <h3 class="text-2xl font-bold text-teal-400">Technical Scoping & Audit</h3>
+                            <p class="mt-2 text-gray-300">We dive into your existing infrastructure. We audit your systems, sensors, and data sources to map out what can be leveraged, what needs to be connected, and how it all fits together.</p>
+                        </div>
+                    </div>
+                    <!-- Phase 4 -->
+                    <div class="relative flex items-start gap-4 animate-on-scroll stagger-3">
+                        <div class="flex-shrink-0 text-3xl mt-1">4️⃣</div>
+                        <div class="flex-grow">
+                            <h3 class="text-2xl font-bold text-teal-400">Prototyping & Validation</h3>
+                            <p class="mt-2 text-gray-300">We make the vision tangible. Through high-fidelity mockups and workflow diagrams, we validate the most critical user experiences with your team before a single line of code is written.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pull Quote Section -->
+        <section class="py-20 animate-on-scroll">
+            <div class="max-w-3xl mx-auto text-center">
+                <span class="text-5xl">💬</span>
+                <blockquote class="mt-4 text-2xl md:text-3xl italic text-gray-200 leading-relaxed">
+                    "A poorly defined scope will derail your project and your procurement. Teams get stuck debating: slow custom solutions or ill-fitting off-the-shelf software. We establish clarity upfront to save millions later. Using application prototypes, we embed the adoption process now, before a high-stakes event leaves no room for error. Ultimately, you get a custom-fit solution that plugs into your standard platforms, solving the debate once and for all."
+                </blockquote>
+                <cite class="block mt-6 text-lg font-semibold text-gray-400">— Jon McFarlane</cite>
+            </div>
+        </section>
+
+        <!-- The Outcomes - What you get -->
+        <section id="outcomes" class="py-20">
+            <div class="text-center max-w-3xl mx-auto animate-on-scroll">
+                <h2 class="text-4xl font-bold">An Asset, Not Just a Report.</h2>
+                <p class="mt-4 text-lg text-gray-300">Our engagement provides a comprehensive set of documents that deliver immediate value. This is your project's foundation—a blueprint you can use to brief any vendor, guide your internal teams, and make informed investment decisions.</p>
+            </div>
+            
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <!-- Package 1 -->
+                <div class="bg-gray-800/50 rounded-xl p-8 border border-gray-700 flex flex-col animate-on-scroll">
+                    <h3 class="text-2xl font-bold text-teal-400">Discovery Blueprint</h3>
+                    <p class="text-gray-300 mt-2">A comprehensive strategic package to de-risk your project.</p>
+                    <div class="text-5xl font-bold my-6">$50,000 <span class="text-lg font-normal text-gray-400">AUD</span></div>
+                    <ul class="space-y-3 text-gray-300 flex-grow">
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span>The Stakeholder Map</span></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span>Prioritized User Stories</span></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span>Technology & Systems Audit</span></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span>Integration Requirements Document</span></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span>Project Statement of Works (SOW)</span></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span>High-Fidelity UX Mockups</span></li>
+                    </ul>
+                    <button data-package="blueprint" class="cta-button mt-8 text-center w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">Select Blueprint</button>
+                </div>
+
+                <!-- Package 2 -->
+                <div class="bg-blue-800/40 rounded-xl p-8 border border-blue-600 ring-2 ring-blue-500 flex flex-col animate-on-scroll stagger-1">
+                     <h3 class="text-2xl font-bold text-blue-400">Blueprint + UI Prototype</h3>
+                     <p class="text-gray-200 mt-2">The complete Blueprint plus a tangible, interactive prototype.</p>
+                    <div class="text-5xl font-bold my-6">$95,000 <span class="text-lg font-normal text-gray-400">AUD</span></div>
+                    <ul class="space-y-3 text-gray-200 flex-grow">
+                         <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">➕</span><span><strong>Everything in the Discovery Blueprint</strong></span></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span><strong>Working UI Prototype:</strong> A clickable, interactive front-end application built with web-standard technologies.</span></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span><strong>Ready to Connect:</strong> Designed for seamless integration with your backend systems and APIs.</span></li>
+                    </ul>
+                     <button data-package="prototype" class="cta-button mt-8 text-center w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Build the Prototype</button>
+                </div>
+                
+                <!-- Package 3 - PlaceOS Offer -->
+                <div class="bg-purple-800/40 rounded-xl p-8 border border-purple-600 ring-2 ring-purple-500 flex flex-col md:col-span-2 lg:col-span-1 animate-on-scroll stagger-2">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-2xl font-bold text-purple-400">For PlaceOS Customers</h3>
+                        <span class="bg-purple-500 text-white text-xs font-bold px-3 py-1 rounded-full">SPECIAL OFFER</span>
+                    </div>
+                    <p class="text-gray-200 mt-2">The complete Blueprint plus a tangible, interactive prototype.</p>
+                    <div class="my-6">
+                        <span class="text-3xl font-normal text-gray-400 line-through">$95,000</span>
+                        <span class="text-5xl font-bold text-white ml-2">$66,500</span>
+                        <span class="text-lg font-normal text-gray-400">AUD</span>
+                    </div>
+                    <ul class="space-y-3 text-gray-200 flex-grow">
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">➕</span><span><strong>Everything in the Discovery Blueprint</strong></span></li>
+                        <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span><strong>Working UI Prototype:</strong> A clickable, interactive front-end application built with web-standard technologies.</span></li>
+                    </ul>
+                    <p class="text-sm text-purple-200 mt-4">This 30% discount is available to all current PlaceOS customers, or as a credit for new customers.</p>
+                    <button data-package="placeos" class="cta-button mt-8 text-center w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Select PlaceOS Offer</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter" class="py-20 animate-on-scroll">
+            <div class="bg-gray-800/50 rounded-xl backdrop-blur-sm p-8 md:p-12 text-center max-w-4xl mx-auto border border-gray-700">
+                <h2 class="text-3xl font-bold">Not Ready for a Full Engagement?</h2>
+                <p class="mt-4 text-gray-300 max-w-2xl mx-auto">Join my exclusive newsletter. It's limited to 100 subscribers to foster a high-quality community. I review each request to ensure the right mix of people.</p>
+                <p class="mt-2 text-gray-400 text-sm max-w-2xl mx-auto">I share actionable ideas, mockups, design references, and prompts to inspire your next campus or workplace tech move.</p>
+                
+                <div class="mt-8 max-w-md mx-auto">
+                     <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
+                        <div class="bg-gradient-to-r from-purple-500 to-indigo-500 h-4 rounded-full text-center text-xs font-bold flex items-center justify-end pr-2" style="width: 15%;">
+                           15/100
+                        </div>
+                    </div>
+                    <form class="flex flex-col sm:flex-row gap-4">
+                        <input type="email" placeholder="Your best email address" class="w-full px-4 py-3 rounded-md bg-gray-900 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105">Request Invite</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer / Contact -->
+    <footer id="contact" class="bg-gray-900/80">
+        <div class="container mx-auto px-6 py-12 text-center">
+            <h2 class="text-3xl font-bold">Ready for a Clearer Path Forward?</h2>
+            <p class="mt-4 text-gray-400 max-w-xl mx-auto">Schedule a complimentary 30-minute call. We’ll discuss your unique campus and workplace challenges and determine if our discovery engagement is the right first step for you. No pressure, no hard sell. Just a productive conversation.</p>
+            <a href="https://app.reclaim.ai/m/jon/flexible-quick-meeting" target="_blank" rel="noopener noreferrer" class="mt-8 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Book Your Complimentary Call</a>
+             <div class="mt-8 text-gray-500">
+                <p>&copy; 2024 Jon's Consulting. All rights reserved.</p>
+             </div>
+        </div>
+    </footer>
+
+    <!-- Form Modal -->
+    <div id="form-modal" class="hidden fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50">
+        <div id="modal-content" class="bg-gray-800 rounded-xl p-8 max-w-lg w-full relative text-white border border-gray-600 shadow-xl">
+            <!-- Close Button -->
+            <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">&times;</button>
+            
+            <!-- Dynamic Title -->
+            <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
+            <p id="modal-price" class="mb-6 text-blue-400"></p>
+            
+            <!-- Form -->
+            <form id="purchase-form" action="https://submit-form.com/zImJgArww" method="POST">
+                <!-- Add a redirect link after form submission. Remember to replace the value with your live page URL -->
+                <input type="hidden" name="_redirect" value="https://your-live-website-url.com">
+                <input type="hidden" id="package-name" name="package-name" value="">
+                <div class="space-y-4">
+                    <div>
+                        <label for="full-name" class="block text-sm font-medium text-gray-300">Full Name</label>
+                        <input type="text" id="full-name" name="full-name" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="position" class="block text-sm font-medium text-gray-300">Position / Title</label>
+                        <input type="text" id="position" name="position" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300">Email Address</label>
+                        <input type="email" id="email" name="email" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                     <div>
+                        <label for="address" class="block text-sm font-medium text-gray-300">Company / University & Address</label>
+                        <textarea id="address" name="address" rows="3" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <button type="submit" id="modal-submit-button" class="w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105">Purchase</button>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- MODAL SCRIPT ---
+            const modal = document.getElementById('form-modal');
+            const closeModalBtn = document.getElementById('close-modal');
+            const ctaButtons = document.querySelectorAll('.cta-button');
+            const form = document.getElementById('purchase-form');
+            const modalTitle = document.getElementById('modal-title');
+            const modalPrice = document.getElementById('modal-price');
+            const modalSubmitButton = document.getElementById('modal-submit-button');
+            const packageNameInput = document.getElementById('package-name');
+
+            const packageInfo = {
+                blueprint: {
+                    title: 'Purchase: Discovery Blueprint',
+                    price: '$50,000 AUD',
+                    buttonText: 'Purchase Blueprint',
+                    buttonColor: 'bg-teal-600 hover:bg-teal-700'
+                },
+                prototype: {
+                    title: 'Purchase: Blueprint + UI Prototype',
+                    price: '$95,000 AUD',
+                    buttonText: 'Purchase Prototype',
+                    buttonColor: 'bg-blue-600 hover:bg-blue-700'
+                },
+                placeos: {
+                    title: 'Purchase: PlaceOS Customer Offer',
+                    price: '$66,500 AUD (Discounted from $95,000)',
+                    buttonText: 'Purchase PlaceOS Offer',
+                    buttonColor: 'bg-purple-600 hover:bg-purple-700'
+                }
+            };
+
+            const openModal = (packageKey) => {
+                const info = packageInfo[packageKey];
+                if (!info) return;
+                form.reset();
+                modalTitle.textContent = info.title;
+                modalPrice.textContent = info.price;
+                modalSubmitButton.textContent = info.buttonText;
+                packageNameInput.value = info.title;
+                modalSubmitButton.className = `w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105 ${info.buttonColor}`;
+                modal.classList.remove('hidden');
+            };
+
+            const closeModal = () => {
+                modal.classList.add('hidden');
+            };
+
+            ctaButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const packageKey = button.dataset.package;
+                    openModal(packageKey);
+                });
+            });
+
+            closeModalBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) closeModal();
+            });
+
+            // --- ANIMATION ON SCROLL SCRIPT ---
+            const targets = document.querySelectorAll('.animate-on-scroll');
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { 
+                rootMargin: '0px',
+                threshold: 0.1 
+            });
+
+            targets.forEach(target => {
+                observer.observe(target);
+            });
+        });
+    </script>
+
+</body>
+</html>
