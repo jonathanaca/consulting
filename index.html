@@ -33,6 +33,32 @@
         #form-modal.hidden {
             display: none;
         }
+        
+        /* Make modal content scrollable */
+        #modal-content {
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        /* Custom scrollbar for modal */
+        #modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        #modal-content::-webkit-scrollbar-track {
+            background: #374151;
+            border-radius: 4px;
+        }
+        
+        #modal-content::-webkit-scrollbar-thumb {
+            background: #6b7280;
+            border-radius: 4px;
+        }
+        
+        #modal-content::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+        
         /* Styles for scroll animations */
         .animate-on-scroll {
             opacity: 0;
@@ -321,7 +347,8 @@
                            15/100
                         </div>
                     </div>
-                    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4">
+                    <form id="newsletter-form" action="https://submit-form.com/zImJgArww" method="POST" class="flex flex-col sm:flex-row gap-4">
+                        <input type="hidden" name="form_type" value="newsletter">
                         <input type="email" id="newsletter-email" name="email" placeholder="Your best email address" class="w-full px-4 py-3 rounded-md bg-gray-900 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
                         <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105">Request Invite</button>
                     </form>
@@ -365,10 +392,9 @@
             <p id="modal-price" class="mb-6 text-blue-400"></p>
             
             <!-- Form -->
-            <form id="purchase-form">
+            <form id="purchase-form" action="https://submit-form.com/zImJgArww" method="POST">
                 <input type="hidden" id="package-name" name="package" value="">
                 <input type="hidden" name="form_type" value="consultation_request">
-                <input type="hidden" name="webhook_url" value="https://hook.eu2.make.com/gim642mlquqtxix0p2khck31c36hbegm">
                 <div class="space-y-4">
                     <div>
                         <label for="full-name" class="block text-sm font-medium text-gray-300">Full Name *</label>
@@ -507,8 +533,8 @@
                 try {
                     const formData = new FormData(form);
                     
-                    // Submit to Formspark
-                    const response = await fetch('https://submit-form.com/zImJgArww', {
+                    // Submit to Formspark using the form's action attribute
+                    const response = await fetch(form.action, {
                         method: 'POST',
                         body: formData,
                         headers: {
@@ -559,13 +585,10 @@
                 submitButton.disabled = true;
 
                 try {
-                    const formData = new FormData();
-                    formData.append('email', document.getElementById('newsletter-email').value);
-                    formData.append('form_type', 'newsletter');
-                    formData.append('webhook_url', 'https://hook.eu2.make.com/gim642mlquqtxix0p2khck31c36hbegm');
+                    const formData = new FormData(newsletterForm);
                     
-                    // Submit to Formspark
-                    const response = await fetch('https://submit-form.com/zImJgArww', {
+                    // Submit to Formspark using the form's action attribute
+                    const response = await fetch(newsletterForm.action, {
                         method: 'POST',
                         body: formData,
                         headers: {
@@ -581,15 +604,17 @@
                         
                         // Also trigger webhook for newsletter signup
                         try {
+                            const webhookData = {};
+                            formData.forEach((value, key) => {
+                                webhookData[key] = value;
+                            });
+                            
                             await fetch('https://hook.eu2.make.com/gim642mlquqtxix0p2khck31c36hbegm', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify({
-                                    email: document.getElementById('newsletter-email').value,
-                                    form_type: 'newsletter'
-                                })
+                                body: JSON.stringify(webhookData)
                             });
                         } catch (webhookError) {
                             console.log('Newsletter webhook notification failed, but signup was submitted successfully');
