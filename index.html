@@ -29,37 +29,27 @@
             z-index: -1;
             opacity: 0.3;
         }
-        /* Style for the modal */
         #form-modal.hidden {
             display: none;
         }
-        
-        /* Make modal content scrollable */
         #modal-content {
             max-height: 90vh;
             overflow-y: auto;
         }
-        
-        /* Custom scrollbar for modal */
         #modal-content::-webkit-scrollbar {
             width: 8px;
         }
-        
         #modal-content::-webkit-scrollbar-track {
             background: #374151;
             border-radius: 4px;
         }
-        
         #modal-content::-webkit-scrollbar-thumb {
             background: #6b7280;
             border-radius: 4px;
         }
-        
         #modal-content::-webkit-scrollbar-thumb:hover {
             background: #9ca3af;
         }
-        
-        /* Styles for scroll animations */
         .animate-on-scroll {
             opacity: 0;
             transform: translateY(20px);
@@ -70,12 +60,11 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Staggered delays for card animations */
         .stagger-1 { transition-delay: 0.1s; }
         .stagger-2 { transition-delay: 0.2s; }
         .stagger-3 { transition-delay: 0.3s; }
-        
-        /* Loading spinner */
+
+        /* Form feedback styles */
         .spinner {
             border: 2px solid #f3f3f3;
             border-top: 2px solid #3498db;
@@ -83,33 +72,28 @@
             width: 20px;
             height: 20px;
             animation: spin 1s linear infinite;
-            display: inline-block;
-            margin-right: 8px;
+            display: none; /* Hidden by default */
+            margin-left: 8px;
         }
-        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        /* Success message */
-        .success-message {
+        .form-message {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            display: none; /* Hidden by default */
+        }
+        .success {
             background-color: #10b981;
             color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            display: none;
         }
-        
-        .error-message {
+        .error {
             background-color: #ef4444;
             color: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            display: none;
         }
+
     </style>
 </head>
 <body class="bg-gray-900 text-white relative antialiased">
@@ -134,8 +118,8 @@
     <main class="container mx-auto px-6">
         <!-- Hero Section -->
         <section class="text-center py-20">
-            <h1 class="text-4xl md:text-6xl font-bold leading-tight">Clarity Before Code.</h1>
-            <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">De-risk your campus or workplace technology project with a fixed-price discovery engagement. We deliver the stakeholder alignment and actionable roadmap you need to succeed—with or without our platform.</p>
+            <h1 class="text-4xl md:text-6xl font-bold leading-tight">Stop Guessing. Start Building.</h1>
+            <p class="mt-4 text-lg md:text-xl text-gray-300 max-w-3xl mx-auto">Our fixed-price discovery process eliminates the risk of your smart building project. We deliver the blueprint for success—a clear plan that aligns stakeholders and guarantees your tech investment delivers, whether you work with us or not.</p>
             <div class="mt-8 flex justify-center gap-4">
                 <a href="https://app.reclaim.ai/m/jon/flexible-quick-meeting" target="_blank" rel="noopener noreferrer" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Book a Discovery Call</a>
                 <a href="#outcomes" class="inline-block bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">See The Deliverables</a>
@@ -144,14 +128,18 @@
 
         <!-- Video Section -->
         <section class="max-w-4xl mx-auto animate-on-scroll">
-             <div class="bg-gray-800/50 aspect-video rounded-xl flex items-center justify-center border-2 border-dashed border-gray-700">
-                <div class="text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="mx-auto h-12 w-12 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p class="mt-2 text-gray-400">Wistia Video Placeholder</p>
-                </div>
+             <div class="bg-gray-800/50 rounded-xl overflow-hidden shadow-2xl">
+                <script src="https://fast.wistia.com/player.js" async></script>
+                <script src="https://fast.wistia.com/embed/e378iaosn8.js" async type="module"></script>
+                <style>
+                    wistia-player[media-id='e378iaosn8']:not(:defined) { 
+                        background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/e378iaosn8/swatch'); 
+                        display: block; 
+                        filter: blur(5px); 
+                        padding-top:56.25%; 
+                    }
+                </style> 
+                <wistia-player media-id="e378iaosn8" aspect="1.7777777777777777"></wistia-player>
             </div>
         </section>
 
@@ -163,12 +151,20 @@
                      class="w-32 h-32 md:w-48 md:h-48 rounded-full flex-shrink-0 object-cover border-4 border-gray-700 mx-auto sm:mx-0"
                      onerror="this.onerror=null;this.src='https://placehold.co/192x192/1F2937/FFFFFF?text=JM';">
                 <div class="text-center sm:text-left">
-                    <h3 class="text-3xl font-bold">Jonathan McFarlane</h3>
+                     <p class="text-xl text-gray-200">
+                        <strong>I’m Jon McFarlane.</strong> You don’t run projects like this every day, and you shouldn't have to navigate them alone.
+                    </p>
                     <p class="mt-4 text-gray-300">
-                        Jonathan McFarlane is the Co-Founder and CEO of PlaceOS, a platform that connects all systems across a campus—AV, IT, access control, HVAC, lighting, and more—to enable automation, real-time data, and seamless user experiences. Originally developed to break down silos in commercial buildings, PlaceOS now powers smart campuses and workplaces alike.
+                        I do. I have, every single day, since 2011.
                     </p>
                      <p class="mt-4 text-gray-300">
-                       With over a decade of experience delivering large-scale technology projects, Jonathan combines deep technical knowledge with a background in user experience design. He holds a Master of Design Science from the University of Sydney and regularly contributes thought leadership on platform strategy and hybrid space design.
+                       In that time, I’ve seen the hype, navigated the pitfalls, and learned what it truly takes to get a smart infrastructure project from a big idea to a seamless reality. This is why I co-founded PlaceOS. We built it to break down the silos I saw in building after building—connecting everything from AV and IT to lighting and access control so they work as one.
+                    </p>
+                     <p class="mt-4 text-gray-300">
+                        My approach combines deep technical knowledge with a background in user experience, a focus I honed while completing my Master of Design Science at the University of Sydney. It’s a combination that allows me to see both the architectural complexity and the human outcome.
+                    </p>
+                    <p class="mt-4 text-gray-300">
+                        Ultimately, my job is to bring that clarity and foresight to your team. So you can move forward, eliminate the guesswork, and build with absolute confidence.
                     </p>
                 </div>
             </div>
@@ -269,7 +265,7 @@
             <div class="max-w-3xl mx-auto text-center">
                 <span class="text-5xl">💬</span>
                 <blockquote class="mt-4 text-2xl md:text-3xl italic text-gray-200 leading-relaxed">
-                    "A poorly defined scope will derail your project and your procurement. Teams get stuck debating: slow custom solutions or ill-fitting off-the-shelf software. We establish clarity upfront to save millions later. Using application prototypes, we embed the adoption process now, before a high-stakes event leaves no room for error. Ultimately, you get a custom-fit solution that plugs into your standard platforms, solving the debate once and for all."
+                    "A poorly defined scope will derail your project and your procurement. Teams get stuck debating: slow custom solutions or ill-fitting off-the-shelf software. <strong>We establish clarity upfront to save millions later.</strong> Using application prototypes, we embed the adoption process now, before a high-stakes event leaves no room for error. Ultimately, you get a custom-fit solution that plugs into your standard platforms, solving the debate once and for all."
                 </blockquote>
                 <cite class="block mt-6 text-lg font-semibold text-gray-400">— Jon McFarlane</cite>
             </div>
@@ -296,7 +292,7 @@
                         <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span>Project Statement of Works (SOW)</span></li>
                         <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span>High-Fidelity UX Mockups</span></li>
                     </ul>
-                    <button data-package="blueprint" class="cta-button mt-8 text-center w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition-colors">Select Blueprint</button>
+                    <button data-package="blueprint" class="cta-button mt-8 text-center w-full bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Get My Blueprint</button>
                 </div>
 
                 <!-- Package 2 -->
@@ -309,7 +305,7 @@
                         <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span><strong>Working UI Prototype:</strong> A clickable, interactive front-end application built with web-standard technologies.</span></li>
                         <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span><strong>Ready to Connect:</strong> Designed for seamless integration with your backend systems and APIs.</span></li>
                     </ul>
-                     <button data-package="prototype" class="cta-button mt-8 text-center w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Build the Prototype</button>
+                     <button data-package="prototype" class="cta-button mt-8 text-center w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Get the Prototype</button>
                 </div>
                 
                 <!-- Package 3 - PlaceOS Offer -->
@@ -329,7 +325,7 @@
                         <li class="flex items-start"><span class="mr-3 mt-1 flex-shrink-0">✅</span><span><strong>Working UI Prototype:</strong> A clickable, interactive front-end application built with web-standard technologies.</span></li>
                     </ul>
                     <p class="text-sm text-purple-200 mt-4">This 30% discount is available to all current PlaceOS customers, or as a credit for new customers.</p>
-                    <button data-package="placeos" class="cta-button mt-8 text-center w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Select PlaceOS Offer</button>
+                    <button data-package="placeos" class="cta-button mt-8 text-center w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">Claim My Offer</button>
                 </div>
             </div>
         </section>
@@ -341,16 +337,25 @@
                 <p class="mt-4 text-gray-300 max-w-2xl mx-auto">Join my exclusive newsletter. It's limited to 100 subscribers to foster a high-quality community. I review each request to ensure the right mix of people.</p>
                 <p class="mt-2 text-gray-400 text-sm max-w-2xl mx-auto">I share actionable ideas, mockups, design references, and prompts to inspire your next campus or workplace tech move.</p>
                 
-                <div class="mt-8 max-w-md mx-auto">
+                <div class="mt-8 max-w-lg mx-auto">
                      <div class="w-full bg-gray-700 rounded-full h-4 mb-4">
                         <div class="bg-gradient-to-r from-purple-500 to-indigo-500 h-4 rounded-full text-center text-xs font-bold flex items-center justify-end pr-2" style="width: 15%;">
                            15/100
                         </div>
                     </div>
-                    <form id="newsletter-form" action="https://submit-form.com/zImJgArww" method="POST" class="flex flex-col sm:flex-row gap-4">
-                        <input type="hidden" name="form_type" value="newsletter">
-                        <input type="email" id="newsletter-email" name="email" placeholder="Your best email address" class="w-full px-4 py-3 rounded-md bg-gray-900 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
-                        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105">Request Invite</button>
+                    <form id="newsletter-form">
+                        <div id="newsletter-success" class="form-message success" style="text-align: center;">Request Sent! Thanks for your interest.</div>
+                        <div id="newsletter-error" class="form-message error">Something went wrong. Please try again.</div>
+                        <div id="newsletter-form-fields" class="space-y-4">
+                            <input type="hidden" name="form_type" value="newsletter">
+                            <input type="text" name="name" placeholder="Your Name" class="w-full px-4 py-3 rounded-md bg-gray-900 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                            <input type="text" name="company" placeholder="Your Company" class="w-full px-4 py-3 rounded-md bg-gray-900 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                            <input type="email" name="email" placeholder="Your Best Email Address" class="w-full px-4 py-3 rounded-md bg-gray-900 border border-gray-600 focus:ring-2 focus:ring-blue-500 focus:outline-none" required>
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105 flex items-center justify-center">
+                                <span class="button-text">Request Invite</span>
+                                <span class="spinner"></span>
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -362,7 +367,7 @@
         <div class="container mx-auto px-6 py-12 text-center">
             <h2 class="text-3xl font-bold">Ready for a Clearer Path Forward?</h2>
             <p class="mt-4 text-gray-400 max-w-xl mx-auto">Schedule a complimentary 30-minute call. We'll discuss your unique campus and workplace challenges and determine if our discovery engagement is the right first step for you. No pressure, no hard sell. Just a productive conversation.</p>
-            <a href="https://app.reclaim.ai/m/jon/flexible-quick-meeting" target="_blank" rel="noopener noreferrer" class="mt-8 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Book Your Complimentary Call</a>
+            <a href="https://app.reclaim.ai/m/jon/flexible-quick-meeting" target="_blank" rel="noopener noreferrer" class="mt-8 inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105">Book My 30-Min Blueprint Call</a>
              <div class="mt-8 text-gray-500">
                 <p>&copy; 2024 Jon's Consulting. All rights reserved.</p>
              </div>
@@ -375,61 +380,57 @@
             <!-- Close Button -->
             <button id="close-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white text-2xl">&times;</button>
             
-            <!-- Success Message -->
-            <div id="success-message" class="success-message">
-                <h4 class="font-bold">Thank you for your interest!</h4>
-                <p>Your request has been submitted successfully. Jon will be in touch within 24 hours to discuss next steps.</p>
-            </div>
-            
-            <!-- Error Message -->
-            <div id="error-message" class="error-message">
-                <h4 class="font-bold">Something went wrong</h4>
-                <p>Please try again or contact jon@place.technology directly.</p>
-            </div>
-            
-            <!-- Dynamic Title -->
             <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
             <p id="modal-price" class="mb-6 text-blue-400"></p>
             
-            <!-- Form -->
-            <form id="purchase-form" action="https://submit-form.com/zImJgArww" method="POST">
-                <input type="hidden" id="package-name" name="package" value="">
-                <input type="hidden" name="form_type" value="consultation_request">
-                <div class="space-y-4">
-                    <div>
-                        <label for="full-name" class="block text-sm font-medium text-gray-300">Full Name *</label>
-                        <input type="text" id="full-name" name="name" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="position" class="block text-sm font-medium text-gray-300">Position / Title *</label>
-                        <input type="text" id="position" name="position" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-gray-300">Email Address *</label>
-                        <input type="email" id="email" name="email" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="phone" class="block text-sm font-medium text-gray-300">Phone Number</label>
-                        <input type="tel" id="phone" name="phone" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                     <div>
-                        <label for="company" class="block text-sm font-medium text-gray-300">Company / University *</label>
-                        <input type="text" id="company" name="company" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-                    <div>
-                        <label for="address" class="block text-sm font-medium text-gray-300">Address</label>
-                        <textarea id="address" name="address" rows="2" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
-                    </div>
-                    <div>
-                        <label for="project-details" class="block text-sm font-medium text-gray-300">Tell us about your project</label>
-                        <textarea id="project-details" name="project_details" rows="3" placeholder="What challenges are you facing? What are your goals?" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
-                    </div>
+            <form id="purchase-form">
+                <div id="purchase-success" class="form-message success">
+                    <h4 class="font-bold">Thank you for your interest!</h4>
+                    <p>Your request has been submitted. Jon will be in touch within 24 hours.</p>
                 </div>
-                <div class="mt-8">
-                    <button type="submit" id="modal-submit-button" class="w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105">
-                        <span id="button-text">Submit Request</span>
-                        <span id="button-spinner" class="spinner hidden"></span>
-                    </button>
+                 <div id="purchase-error" class="form-message error">
+                    <h4 class="font-bold">Something went wrong</h4>
+                    <p>Please try again or contact us directly.</p>
+                </div>
+                <div id="purchase-form-fields">
+                    <input type="hidden" id="package-name" name="package" value="">
+                    <input type="hidden" name="form_type" value="consultation_request">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="full-name" class="block text-sm font-medium text-gray-300">Full Name *</label>
+                            <input type="text" id="full-name" name="name" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="position" class="block text-sm font-medium text-gray-300">Position / Title *</label>
+                            <input type="text" id="position" name="position" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300">Email Address *</label>
+                            <input type="email" id="email" name="email" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-gray-300">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                         <div>
+                            <label for="company" class="block text-sm font-medium text-gray-300">Company / University *</label>
+                            <input type="text" id="company" name="company" required class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-gray-300">Address</label>
+                            <textarea id="address" name="address" rows="2" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                        <div>
+                            <label for="project-details" class="block text-sm font-medium text-gray-300">Tell us about your project</label>
+                            <textarea id="project-details" name="project_details" rows="3" placeholder="What challenges are you facing? What are your goals?" class="mt-1 block w-full bg-gray-900 border border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                        </div>
+                    </div>
+                    <div class="mt-8">
+                        <button type="submit" id="modal-submit-button" class="w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105 flex items-center justify-center">
+                            <span class="button-text">Submit Request</span>
+                            <span class="spinner"></span>
+                        </button>
+                    </div>
                 </div>
             </form>
             
@@ -438,211 +439,117 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- MODAL SCRIPT ---
+            // --- Configuration ---
+            const SCRIPT_URLS = {
+                purchase: 'https://script.google.com/macros/s/AKfycbxCXtuDp4BQaC4fLej_l68zxJ4-ouAdS-WZw-ivDsNdWdPaVVo7_s6wPpo-DZZsjUXshg/exec',
+                newsletter: 'https://script.google.com/macros/s/AKfycbzygAeuipmEpuFLAKyJOiupRfoAOirW-9VEAL1b6uFtOSrit6kW4M5erheH4qma1BZQ/exec'
+            };
+
+            // --- Modal UI Logic ---
             const modal = document.getElementById('form-modal');
             const closeModalBtn = document.getElementById('close-modal');
             const ctaButtons = document.querySelectorAll('.cta-button');
-            const form = document.getElementById('purchase-form');
-            const newsletterForm = document.getElementById('newsletter-form');
+            const purchaseForm = document.getElementById('purchase-form');
             const modalTitle = document.getElementById('modal-title');
             const modalPrice = document.getElementById('modal-price');
             const modalSubmitButton = document.getElementById('modal-submit-button');
             const packageNameInput = document.getElementById('package-name');
-            const successMessage = document.getElementById('success-message');
-            const errorMessage = document.getElementById('error-message');
-            const buttonText = document.getElementById('button-text');
-            const buttonSpinner = document.getElementById('button-spinner');
+            const purchaseFormFields = document.getElementById('purchase-form-fields');
+            const purchaseSuccessMessage = document.getElementById('purchase-success');
 
             const packageInfo = {
-                blueprint: {
-                    title: 'Discovery Blueprint',
-                    price: '$50,000 AUD',
-                    buttonText: 'Submit Request',
-                    buttonColor: 'bg-teal-600 hover:bg-teal-700'
-                },
-                prototype: {
-                    title: 'Blueprint + UI Prototype',
-                    price: '$95,000 AUD',
-                    buttonText: 'Submit Request',
-                    buttonColor: 'bg-blue-600 hover:bg-blue-700'
-                },
-                placeos: {
-                    title: 'PlaceOS Customer Offer',
-                    price: '$66,500 AUD (30% Discount)',
-                    buttonText: 'Submit Request',
-                    buttonColor: 'bg-purple-600 hover:bg-purple-700'
-                }
+                blueprint: { title: 'Discovery Blueprint', price: '$50,000 AUD', buttonColor: 'bg-teal-600 hover:bg-teal-700' },
+                prototype: { title: 'Blueprint + UI Prototype', price: '$95,000 AUD', buttonColor: 'bg-blue-600 hover:bg-blue-700' },
+                placeos: { title: 'PlaceOS Customer Offer', price: '$66,500 AUD (30% Discount)', buttonColor: 'bg-purple-600 hover:bg-purple-700' }
             };
 
             const openModal = (packageKey) => {
                 const info = packageInfo[packageKey];
                 if (!info) return;
                 
-                // Reset form and messages
-                form.reset();
-                successMessage.style.display = 'none';
-                errorMessage.style.display = 'none';
-                
-                // Set modal content
+                // Reset form to initial state
+                purchaseForm.reset();
+                purchaseSuccessMessage.style.display = 'none';
+                purchaseFormFields.style.display = 'block';
+
                 modalTitle.textContent = info.title;
                 modalPrice.textContent = info.price;
-                buttonText.textContent = info.buttonText;
                 packageNameInput.value = info.title;
-                modalSubmitButton.className = `w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105 ${info.buttonColor}`;
+                modalSubmitButton.className = `w-full text-white font-bold py-3 px-6 rounded-md shadow-lg transition-transform transform hover:scale-105 flex items-center justify-center ${info.buttonColor}`;
                 
                 modal.classList.remove('hidden');
             };
 
-            const closeModal = () => {
-                modal.classList.add('hidden');
-            };
+            const closeModal = () => modal.classList.add('hidden');
 
-            const showLoading = (show) => {
-                if (show) {
-                    buttonText.style.display = 'none';
-                    buttonSpinner.classList.remove('hidden');
-                    modalSubmitButton.disabled = true;
-                } else {
-                    buttonText.style.display = 'inline';
-                    buttonSpinner.classList.add('hidden');
-                    modalSubmitButton.disabled = false;
-                }
-            };
-
-            // Event Listeners
-            ctaButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const packageKey = button.dataset.package;
-                    openModal(packageKey);
-                });
-            });
-
+            ctaButtons.forEach(button => button.addEventListener('click', () => openModal(button.dataset.package)));
             closeModalBtn.addEventListener('click', closeModal);
             modal.addEventListener('click', (event) => {
                 if (event.target === modal) closeModal();
             });
 
-            // Main form submission - using Formspark with webhook
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                showLoading(true);
-                successMessage.style.display = 'none';
-                errorMessage.style.display = 'none';
+            // --- Universal Form Submission Logic ---
+            const handleFormSubmit = (formId, scriptUrl) => {
+                const form = document.getElementById(formId);
+                if (!form) return;
 
-                try {
-                    const formData = new FormData(form);
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
                     
-                    // Submit to Formspark using the form's action attribute
-                    const response = await fetch(form.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
-
-                    showLoading(false);
-
-                    if (response.ok) {
-                        successMessage.style.display = 'block';
-                        form.style.display = 'none';
-                        
-                        // Also trigger webhook directly for immediate notification
-                        try {
-                            const webhookData = {};
-                            formData.forEach((value, key) => {
-                                webhookData[key] = value;
-                            });
-                            
-                            await fetch('https://hook.eu2.make.com/gim642mlquqtxix0p2khck31c36hbegm', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(webhookData)
-                            });
-                        } catch (webhookError) {
-                            console.log('Webhook notification failed, but form was submitted successfully');
-                        }
-                    } else {
-                        throw new Error('Form submission failed');
+                    if (!scriptUrl || scriptUrl.includes('PASTE_YOUR')) {
+                        alert('Please update the SCRIPT_URL in the HTML file for the newsletter form.');
+                        return;
                     }
-                } catch (error) {
-                    console.error('Form submission error:', error);
-                    showLoading(false);
-                    errorMessage.style.display = 'block';
-                }
-            });
 
-            // Newsletter form submission - using Formspark with webhook
-            newsletterForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const submitButton = newsletterForm.querySelector('button[type="submit"]');
-                const originalText = submitButton.textContent;
-                submitButton.textContent = 'Submitting...';
-                submitButton.disabled = true;
-
-                try {
-                    const formData = new FormData(newsletterForm);
+                    const submitButton = form.querySelector('button[type="submit"]');
+                    const buttonText = submitButton.querySelector('.button-text');
+                    const spinner = submitButton.querySelector('.spinner');
                     
-                    // Submit to Formspark using the form's action attribute
-                    const response = await fetch(newsletterForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    });
+                    // Show loading state
+                    if (buttonText) buttonText.style.display = 'none';
+                    spinner.style.display = 'inline-block';
+                    submitButton.disabled = true;
 
-                    if (response.ok) {
-                        submitButton.textContent = 'Request Sent!';
-                        submitButton.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-                        submitButton.classList.add('bg-green-600');
-                        newsletterForm.reset();
-                        
-                        // Also trigger webhook for newsletter signup
-                        try {
-                            const webhookData = {};
-                            formData.forEach((value, key) => {
-                                webhookData[key] = value;
-                            });
+                    fetch(scriptUrl, { method: 'POST', body: new FormData(form)})
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.result === 'success') {
+                                // Show success message
+                                if(formId === 'purchase-form') {
+                                    purchaseFormFields.style.display = 'none';
+                                    purchaseSuccessMessage.style.display = 'block';
+                                } else {
+                                    document.getElementById('newsletter-form-fields').style.display = 'none';
+                                    document.getElementById('newsletter-success').style.display = 'block';
+                                }
+                                form.reset();
+                            } else {
+                                throw new Error(data.error || 'Unknown error');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error!', error.message);
+                            // Show error message
+                            const errorEl = document.getElementById(`${formId}-error`);
+                            if(errorEl) errorEl.style.display = 'block';
                             
-                            await fetch('https://hook.eu2.make.com/gim642mlquqtxix0p2khck31c36hbegm', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify(webhookData)
-                            });
-                        } catch (webhookError) {
-                            console.log('Newsletter webhook notification failed, but signup was submitted successfully');
-                        }
-                        
-                        setTimeout(() => {
-                            submitButton.textContent = originalText;
-                            submitButton.classList.remove('bg-green-600');
-                            submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
+                            setTimeout(() => {
+                                if(errorEl) errorEl.style.display = 'none';
+                            }, 5000);
+                        })
+                        .finally(() => {
+                            // Hide loading state
+                            if (buttonText) buttonText.style.display = 'inline';
+                            spinner.style.display = 'none';
                             submitButton.disabled = false;
-                        }, 3000);
-                    } else {
-                        throw new Error('Newsletter submission failed');
-                    }
-                } catch (error) {
-                    console.error('Newsletter submission error:', error);
-                    submitButton.textContent = 'Error - Try Again';
-                    submitButton.classList.remove('bg-indigo-600', 'hover:bg-indigo-700');
-                    submitButton.classList.add('bg-red-600');
-                    
-                    setTimeout(() => {
-                        submitButton.textContent = originalText;
-                        submitButton.classList.remove('bg-red-600');
-                        submitButton.classList.add('bg-indigo-600', 'hover:bg-indigo-700');
-                        submitButton.disabled = false;
-                    }, 3000);
-                }
-            });
+                        });
+                });
+            };
+
+            // Initialize both forms
+            handleFormSubmit('purchase-form', SCRIPT_URLS.purchase);
+            handleFormSubmit('newsletter-form', SCRIPT_URLS.newsletter);
+
 
             // --- ANIMATION ON SCROLL SCRIPT ---
             const targets = document.querySelectorAll('.animate-on-scroll');
